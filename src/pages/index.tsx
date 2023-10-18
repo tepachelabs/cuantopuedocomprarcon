@@ -1,28 +1,24 @@
 import {ChangeEvent, useState} from "react";
 
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
-
 import { Spinner } from '@/components/spinner';
 import { Product } from '@/components/product';
 import { AmountInput } from '@/components/amount-input';
 
 import {formatCurrency, cleanMoneyFormat} from '@/utils/money-format';
 
+import { useProducts } from '@/hooks/useProducts';
+
 const DEFAULT_AMOUNT = formatCurrency((10_000).toString());
 
-const Home = ({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = () => {
+  const { products, isLoading, fetchProducts} = useProducts();
+
   const [amount, setAmount] = useState(DEFAULT_AMOUNT);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = () => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
-
     setIsSubmitted(true);
+    fetchProducts();
   };
 
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,54 +61,5 @@ const Home = ({ products }: InferGetServerSidePropsType<typeof getServerSideProp
     </div>
   )
 };
-
-export const getServerSideProps = (async (context) => {
-  const products: Product[] = [
-    {
-      price: 23,
-      title: 'Cheetos Flaming Hot',
-    },
-    {
-      price: 10_000,
-      title: 'Laptop',
-    },
-    {
-      price: 23_122,
-      title: 'Tacos al pastor',
-    },
-    {
-      price: 23,
-      title: 'Cheetos Flaming Hot',
-    },
-    {
-      price: 10_000,
-      title: 'Laptop',
-    },
-    {
-      price: 23_122,
-      title: 'Tacos al pastor',
-    },
-    {
-      price: 23,
-      title: 'Cheetos Flaming Hot',
-    },
-    {
-      price: 10_000,
-      title: 'Laptop',
-    },
-    {
-      price: 23_122,
-      title: 'Tacos al pastor',
-    },
-  ];
-
-  return {
-    props: {
-      products
-    },
-  };
-}) satisfies GetServerSideProps<{
-  products: Product[]
-}>
 
 export default Home;

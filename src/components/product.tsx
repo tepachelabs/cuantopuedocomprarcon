@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import {formatCurrency} from "@/utils/money-format";
 
 interface Props {
  amount: number;
@@ -16,7 +17,7 @@ export const Product:FC<Props> = ({ product, amount }) => {
           {product.title}
         </h5>
         <p className="font-normal text-gray-700 dark:text-gray-400">
-          Precio por unidad: {product.price}
+          Precio por unidad: ${formatCurrency(product.price.toString())}
         </p>
       </div>
       <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
