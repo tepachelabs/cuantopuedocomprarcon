@@ -49,7 +49,15 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="w-ful pt-20 grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="fixed w-full h-20 px-10 top-0 left-0 bg-violet-300 flex justify-center">
+        <div className="w-full max-w-xl">
+          <AmountInput
+            value={amount}
+            onChange={handleAmountChange}
+          />
+        </div>
+      </div>
       {products.map((product, index) => (
         <div className="w-full" key={index}>
           <Product
